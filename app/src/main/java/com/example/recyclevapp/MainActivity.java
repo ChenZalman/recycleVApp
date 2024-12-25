@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Declaring all variables so they can be used in all parts of the MainActivity class
     private ArrayList<DataModel> dataSet;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -25,8 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Must function calls to initiate the onCreate so we have a display to see
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Setting all variables so they won't be nullPointerException
         editText = findViewById(R.id.editTextText);
         dataSet = new ArrayList<>();
         recyclerView = findViewById(R.id.resView);
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             ));
         }
 
+        //This part provides the functionality of the click and long click login for the cardViews in recyclerView
         CustomeAdapter.RecyclerViewListener listener = new CustomeAdapter.RecyclerViewListener() {
             @Override
             public void onClick(View view, int position) {
@@ -63,10 +69,12 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //Added a listener to the CustomeAdapter so it can get the clicks listener
         adapter = new CustomeAdapter(dataSet, listener);
         recyclerView.setAdapter(adapter);
 
         editText.addTextChangedListener(new TextWatcher() {
+            //Not used in the project
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -81,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
 
+            //Not used in the project
             @Override
             public void afterTextChanged(Editable editable) {
             }
@@ -88,10 +97,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void filter(String text) {
-        // creating a new array list to filter data
+        // creating a new array list to filter data, so the original dataSet is kept intact
         ArrayList<DataModel> filteredList = new ArrayList<>();
 
-        // running a for loop to compare elements
+        // itirating all elements of dataSet
         for (DataModel item : dataSet) {
             // checking if the entered string matches any item of our recycler view
             if (item.getName().toLowerCase().contains(text.toLowerCase())) {
@@ -100,12 +109,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        //Checking if the filteredList has some elements in it
         if (filteredList.isEmpty()) {
             // displaying a toast message if no data found
-            Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No character with the entered letters found..", Toast.LENGTH_SHORT).show();
             adapter.filterList(filteredList);
         } else {
-            // passing the filtered list to the adapter class
+            // passing the filtered list to the CustomeAdapter
             adapter.filterList(filteredList);
         }
     }

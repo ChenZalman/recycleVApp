@@ -9,18 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
-
-import android.graphics.Color;
-
 public class CustomeAdapter extends RecyclerView.Adapter<CustomeAdapter.MyViewHolder> {
 
+    //Declaring all variables so they can be used in all parts of the CustomeAdapter class
     private ArrayList<DataModel> dataSet;
     private RecyclerViewListener listener;
+
+    //Constructor
     public CustomeAdapter(ArrayList<DataModel> dataSet, RecyclerViewListener listener) {
         this.dataSet = dataSet;
         this.listener = listener;
     }
 
+    //Creating an interface so it can be override in MainActivity
     public interface RecyclerViewListener{
         void onClick(View  view, int position);
         boolean onLongClick(View view, int position);
@@ -40,12 +41,8 @@ public class CustomeAdapter extends RecyclerView.Adapter<CustomeAdapter.MyViewHo
     }
 
     public void filterList(ArrayList<DataModel> filterList) {
-        // below line is to add our filtered
-        // list in our course array list.
+        //Below line is to add our filtered list in our course array list.
         this.dataSet = filterList;
-        // below line is to notify our adapter
-        // as change in recycler view data.
-//        notifyDataSetChanged();
     }
 
     @NonNull
@@ -64,6 +61,7 @@ public class CustomeAdapter extends RecyclerView.Adapter<CustomeAdapter.MyViewHo
         holder.textViewVersion.setText(dataSet.get(position).getVersion());
         holder.imageView.setImageResource(dataSet.get(position).getImage());
 
+        //Binding each item in the recyclerView with clicks listeners
         holder.itemView.setOnClickListener(v -> listener.onClick(v, position));
         holder.itemView.setOnLongClickListener(v -> {
             listener.onLongClick(v, position);
